@@ -1,6 +1,6 @@
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
-export const createContractFields: FormlyFieldConfig[] = [
+export const SupplierContractFormBuilder: FormlyFieldConfig[] = [
     {
         key: 'generalInfoSection',
         wrappers: ['form-field'],
@@ -601,7 +601,7 @@ export const createContractFields: FormlyFieldConfig[] = [
         },
         fieldGroup: [
             {
-                key: 'certificatedOfExistencePorvenir',
+                key: 'certificatedOfExistence',
                 type: 'file',
                 className: 'form-section-row',
                 templateOptions: {
@@ -636,3 +636,5 @@ export const createContractFields: FormlyFieldConfig[] = [
         ]
     }
 ];
+
+export const SupplierMessage = 'Genera un nuevo contrato según solicitud del área usuaria';
