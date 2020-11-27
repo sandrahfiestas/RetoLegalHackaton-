@@ -37,15 +37,16 @@ export class CreateContractComponent implements OnInit {
     this.data = this.fireStore.getData();
   }
 
-  update(): void {
-    // this.firestore.update();
-  }
-
+  
   add(item: Contract): void {
     this.fireStore.add(item);
   }
-
-
-
+  
+  
+  
+  //arg id
+  update(item: Contract): void {
+    // this.fireStore.update();
+  }
 
 }

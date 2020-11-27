@@ -31,13 +31,16 @@ export class FirestoreService {
   }
     // tslint:disable-next-line: typedef
     add(item: Contract) {
-      this.dataCollection.add(item);
-      console.log('item');
+   this.dataCollection.add(item).then((data)=>{
+     console.log(data.id);
+     localStorage.setItem('idContract', data.id)
+   });
     }
 
-    // tslint:disable-next-line: typedef
-    update(item: Contract) {
-      this.firestore.doc(`${this.path}`).update(item);
+    update(id: string, item: Partial<Contract>) {
+      this.dataCollection.doc(`${this.path}/${id}`).update(item);
+      // const myId = localStorage.getItem('idContract')
     }
+    
   }
 
