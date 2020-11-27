@@ -6,6 +6,9 @@ import {UserRole} from '../../../core/types/user-type.type';
 import {SupplierContractFormBuilder, SupplierMessage} from './builders/supplier-contract-form-builder';
 import {UserContractFormBuilder, UserMessage} from './builders/user-contract-form-builder';
 import { FirestoreService } from '../../services/contract.service';
+import { Observable } from 'rxjs';
+import { Contract } from '../../model/contract.model';
+
 
 @Component({
   selector: 'app-create-contract',
@@ -26,7 +29,10 @@ export class CreateContractComponent implements OnInit {
     },
   };
 
-  data = [];
+  // data = [];
+
+  data: Observable<Contract[]>;
+
 
   constructor(private authService: AuthService, private firestoreServie: FirestoreService) {}
 
@@ -40,4 +46,8 @@ export class CreateContractComponent implements OnInit {
   requireInfo(): void {
     console.log('requireInfo');
   }
+
+
+
+
 }

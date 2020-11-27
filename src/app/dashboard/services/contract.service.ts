@@ -14,7 +14,9 @@ export class FirestoreService {
   contractInfo: Observable<Contract[]>;
   path = 'contracts';
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {
+    
+   }
 
   getData(): Observable<Contract[]> {
     this.dataCollection = this.firestore.collection<Contract>('contracts');
@@ -28,4 +30,7 @@ export class FirestoreService {
       })));
 
   }
+
+  }
+
 }
