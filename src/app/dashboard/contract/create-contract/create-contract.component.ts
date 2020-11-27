@@ -29,22 +29,20 @@ export class CreateContractComponent implements OnInit {
     },
   };
 
-  // data = [];
-
   data: Observable<Contract[]>;
 
-
-  constructor(private authService: AuthService, private firestoreServie: FirestoreService) {}
+  constructor(private authService: AuthService, private fireStore: FirestoreService) {}
 
   ngOnInit(): void {
+    this.data = this.fireStore.getData();
   }
 
-  save(): void {
-    console.log(this.model);
+  update(): void {
+    // this.firestore.update();
   }
 
-  requireInfo(): void {
-    console.log('requireInfo');
+  add(item: Contract): void {
+    this.fireStore.add(item);
   }
 
 
