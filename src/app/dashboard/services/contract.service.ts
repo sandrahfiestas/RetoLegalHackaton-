@@ -8,38 +8,31 @@ import { Contract } from '../model/contract.model';
   providedIn: 'root'
 })
 
-export class FirestoreService {
+export class ContractService {
 
   private dataCollection: AngularFirestoreCollection<Contract>;
-  contractInfo: Observable<Contract[]>;
   path = 'contracts';
 
   constructor(private firestore: AngularFirestore) {
     
    }
 
-  getData(): Observable<Contract[]> {
+  getAll(): Observable<Contract[]> {
     this.dataCollection = this.firestore.collection<Contract>('contracts');
 
     return this.dataCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Contract;
-        // tslint:disable-next-line: variable-name
-        const _id = a.payload.doc.id;
-        return { _id, ...data };
+        const id = a.payload.doc.id;
+        return { id, ...data };
       })));
   }
-    // tslint:disable-next-line: typedef
-    add(item: Contract) {
-   this.dataCollection.add(item).then((data)=>{
-     console.log(data.id);
-     localStorage.setItem('idContract', data.id)
-   });
+    add(item: Contract): Promise<any> {
+      return this.dataCollection.add(item);
     }
 
-    update(id: string, item: Partial<Contract>) {
-      this.dataCollection.doc(`${this.path}/${id}`).update(item);
-      // const myId = localStorage.getItem('idContract')
+    update(id: string, item: Partial<Contract>): Promise<any> {
+      return this.firestore.doc(`${this.path}/${id}`).update(item);
     }
     
   }

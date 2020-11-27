@@ -9,6 +9,9 @@ import { FirestoreService } from '../../services/contract.service';
 import { Observable } from 'rxjs';
 import { Contract } from '../../model/contract.model';
 
+import { ContractService } from '../../services/contract.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-contract',
@@ -29,17 +32,46 @@ export class CreateContractComponent implements OnInit {
     },
   };
 
+  showButtonUserCanEdit = false;
   data: Observable<Contract[]>;
+  contractId: string;
 
-  constructor(private authService: AuthService, private fireStore: FirestoreService) {}
+  constructor(private authService: AuthService,
+              private fireStore: ContractService,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit(): void {
-    this.data = this.fireStore.getData();
+    this.route.paramMap.pipe().subscribe(
+      params => {
+        if (params.get('id')) {
+          this.contractId = params.get('id');
+        }
+    });
+    this.data = this.fireStore.getAll();
   }
 
   
+  update(): void {
+    this.fireStore.update(this.contractId, {userCanEdit: true});
+  }
+
   add(item: Contract): void {
-    this.fireStore.add(item);
+    console.log(this.contractId);
+    if (this.contractId) {
+      this.fireStore.update(this.contractId, item)
+          .then(() => {
+            this.router.navigate(['/dashboard/states']);
+          });
+    } else {
+      item.userCanEdit = false;
+      this.fireStore.add(item)
+        .then((docRef) => {
+          this.showButtonUserCanEdit = true;
+          this.contractId = docRef.id;
+          // this.router.navigate(['/dashboard/states']);
+        });
+    }
   }
   
   
